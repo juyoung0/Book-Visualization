@@ -9,7 +9,7 @@ import {Actions} from './actions';
 
 // graph payload (with minimalist structure)
 const data = {
-    nodes: [{ id: 'Harry' }, { id: 'Sally' }, { id: 'Alice' }],
+    nodes: [{ id: 'Harry', speech:[] }, { id: 'Sally', speech:[] }, { id: 'Alice', speech:[]}],
     links: [{ source: 'Harry', target: 'Sally' }, { source: 'Harry', target: 'Alice' }]
 };
 
@@ -41,7 +41,7 @@ class myGraph extends Component
             tNode : null,
         };
         nodeStore.onChange=()=>{
-            data.nodes.push({id:nodeStore.node})
+            data.nodes.push({id:nodeStore.node, speech:[]})
             this.setState({data: data})
          //   Actions.changeData(data);
         }

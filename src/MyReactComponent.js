@@ -19,8 +19,9 @@ import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';import Toggle from 'material-ui/Toggle';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-
+import NodeAdd from 'material-ui/svg-icons/action/face';
+import LinkAdd from 'material-ui/svg-icons/action/supervisor-account';
+import SpeechAdd from 'material-ui/svg-icons/action/speaker-notes';
 
 var clickedPaper = null;
 var clickedMenu = null;
@@ -69,11 +70,12 @@ class MyAppBar extends Component {
         this.state = {
             "open": false,
             "clicked":null,
-            "annoOpen":false,
+            "speechOpen":false,
             "data":  {
                 nodes: [],
                 links: []
-            }
+            },
+            "text": ""
         };
 
         menuStore.onChange = () => {
@@ -96,32 +98,40 @@ class MyAppBar extends Component {
             Actions.addSource(null);
             Actions.addTarget(null);
 
-            Actions.dataChange
         }else if(event.currentTarget.id == "add-node"){
             //Actions.selectText(text);
             var selection = window.getSelection();
             var text = selection.anchorNode.data;
             text = text.substring( selection.anchorOffset,selection.focusOffset);
             Actions.addNode(text);
-        }else if(event.currentTarget.id == "add-annotation"){
+        }else if(event.currentTarget.id == "add-speech"){
             var selection = window.getSelection();
             var text = selection.anchorNode.data;
             text = text.substring( selection.anchorOffset,selection.focusOffset);
             document.getElementById("dragged_text").innerHTML = text;
 
-            if(this.state.annoOpen == false)
-                this.setState({ annoOpen : true, anchorEl : event.currentTarget});
+            if(this.state.speechOpen == false)
+                this.setState({ speechOpen : true, anchorEl : event.currentTarget});
             else
-                this.setState({annoOpen : false});
-        }
+                this.setState({speechOpen : false});
 
+            this.setState({text : text});
+          //  Actions.selectText(text);
+        }
     };
 
     handleClose = () => {
         this.setState({input: false});
     };
     handleRequestClose = () => {
-        this.setState({annoOpen : false});
+        this.setState({speechOpen : false});
+    };
+
+    handleAnnotation = event => {
+        var data = this.state.data;
+        var ind = data.nodes.findIndex(n => n.id == event.currentTarget.id);
+        data.nodes[ind].speech.push(this.state.text);
+        this.setState({speechOpen : false});
     }
 
     dragStart = (event) => {
@@ -179,32 +189,32 @@ class MyAppBar extends Component {
                     </ToolbarGroup>
                     <ToolbarGroup>
                         <FloatingActionButton id="add-node" onClick={this.handleClick} mini={true} label="Add Text" style={styles.actionButton}>
-                            <ContentAdd />
+                            <NodeAdd />
                         </FloatingActionButton>
                         <FloatingActionButton id="add-relationship" onClick={this.handleClick} mini={true} label="Add Relationship" style={styles.actionButton}>
-                            <ContentAdd />
+                            <LinkAdd />
                         </FloatingActionButton>
                         <div>
-                        <FloatingActionButton id="add-annotation" onClick={this.handleClick} mini={true} label="Add Annotation" style={styles.actionButton}>
-                            <ContentAdd />
+                        <FloatingActionButton id="add-speech" onClick={this.handleClick} mini={true} label="Add Speech" style={styles.actionButton}>
+                            <SpeechAdd />
                         </FloatingActionButton>
                         <Popover
-                            open={this.state.annoOpen}
+                            open={this.state.speechOpen}
                             anchorEl={this.state.anchorEl}
                             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                             targetOrigin={{horizontal: 'left', vertical: 'top'}}
                             onRequestClose={this.handleRequestClose}
                         >
                             <Menu>
-                                {this.state.data.nodes.map((node) => {return (<MenuItem primaryText={node.id}/>);})}
+                                {this.state.data.nodes.map((node) => {return (<MenuItem onClick={this.handleAnnotation} id={node.id} primaryText={node.id}/>);})}
 
                             </Menu>
                         </Popover>
                         </div>
                     </ToolbarGroup>
                     <p draggable="true" id="dragged_text" onDragStart={this.dragStart} onDrag={this.drag} onDragEnter={this.dragEnter} onDragEnd={this.dragEnd} onDragLeave={this.dragLeave}>text</p>
-                    <p  id="demo">demo</p>
-                    <p id="droptarget" onDrop={this.drop} onDragOver={this.dragOver} className="droptarget">here</p>
+                    <p  id="demo"></p>
+                    <p id="droptarget" onDrop={this.drop} onDragOver={this.dragOver} className="droptarget"></p>
                     <p id="link_info"></p>
 
                     <ToolbarGroup>
