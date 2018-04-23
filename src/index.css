@@ -4,8 +4,35 @@ body {
   font-family: sans-serif;
 }
 
+.app-bar {
+}
+
+.content {
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+  padding-top: 30px;
+  position: relative;
+  width: 100%;
+  backface-visibility: hidden;
+  will-change: overflow;
+}
+
+.book {
+  overflow: auto;
+  height: auto;
+  padding: .5rem;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+
+.vl::-webkit-scrollbar,
+.book::-webkit-scrollbar {
+  display: none;
+}
+
 .workspace{
-  height: 80%;
+  height: 100%;
 }
 
 .timeline{
@@ -14,9 +41,16 @@ body {
 
 .vl {
   border-left: 6px solid green;
-  height: 500px;
+  height: 100%;
   position: absolute;
   left: 50%;
   margin-left: -3px;
   top: 0;
+}
+
+.book {
+  float: left;
+  max-width: 700%;
+  margin : 10px;
+  padding: 1em;
 }

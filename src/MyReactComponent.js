@@ -10,8 +10,8 @@ import MyGraph from './MyGraph';
 import MyBook from './MyBook';
 import CPaper from './InputPage';
 import RPaper from './InputPage2';
-import {menuStore, nodeStore, linkStore, sourceStore, targetStore, textStore, dataStore} from './stores'
 import ListItems from './MyList';
+import {menuStore, nodeStore, linkStore, sourceStore, targetStore, textStore, dataStore} from './stores'
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
@@ -178,7 +178,7 @@ class MyAppBar extends Component {
     render(){
 
         return(
-            <div>
+            <div className="app-bar">
                 <AppBar
                     title="Book Vis"
                     iconClassNameRight="muidocs-icon-navigation-expand-more"
@@ -247,8 +247,10 @@ class MyAppBar extends Component {
 const MyReactComponent = () => (
     <div>
     <MyAppBar />
-    <div><MyBook/></div>
-    <div className='vl'><MyGraph/></div>
+    <div className = 'content'>
+        <div className='book'><MyBook/></div>
+        <div className='vl'><MyGraph/></div>
+    </div>
     <RPaper />
     <CPaper />
 

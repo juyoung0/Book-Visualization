@@ -18,7 +18,7 @@ const data = {
 const myConfig = {
     nodeHighlightBehavior: true,
     width : 1000,
-    height : 800,
+    height : 1500,
     node: {
         color: 'lightgreen',
         size: 220,
