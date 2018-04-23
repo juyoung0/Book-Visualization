@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Graph } from 'react-d3-graph';
-import {nodeStore, sourceStore, targetStore, linkStore} from './stores'
+import {nodeStore, sourceStore, targetStore, linkStore, dataStore} from './stores'
 import {Actions} from './actions';
 
 
@@ -17,7 +17,7 @@ const data = {
 // that you want to override, otherwise default ones will be used
 const myConfig = {
     nodeHighlightBehavior: true,
-    width : 2000,
+    width : 1000,
     height : 800,
     node: {
         color: 'lightgreen',
@@ -33,7 +33,6 @@ class myGraph extends Component
 {
     constructor(props) {
         super(props);
-
         this.state = {
             config : myConfig,
             data : '',
@@ -44,36 +43,42 @@ class myGraph extends Component
         nodeStore.onChange=()=>{
             data.nodes.push({id:nodeStore.node})
             this.setState({data: data})
+         //   Actions.changeData(data);
         }
         sourceStore.onChange=()=>{
             this.setState({sNode: sourceStore.sNode})
+            document.getElementById("link_info").innerHTML = "from " + sourceStore.sNode;
         }
         targetStore.onChange=()=>{
             this.setState({tNode: targetStore.tNode})
+            document.getElementById("link_info").innerHTML = "from " + sourceStore.sNode + " to " + targetStore.tNode ;
         }
         linkStore.onChange=()=>{
             data.links.push({source:linkStore.sNode,target:linkStore.tNode})
             this.setState({data: data})
+            document.getElementById("link_info").innerHTML = "";
+          //  Actions.changeData(data);
         }
     }
 
     componentDidUpdate(){
-      // if(this.state.sNode!=null && this.state.tNode!=null)
-         //  Actions.addLink(this.state.sNode, this.state.tNode);
+        Actions.changeData(this.state.data);
     }
 
     onClickNode = function(nodeId) {
         console.log('Clicked node'+nodeId);
 
-        if (!this.state.sNode) {
+        if (!sourceStore.sNode) {
             Actions.addSource(nodeId);
+           // this.setState({sNode : nodeId});
         }
         else{
-          //  if (this.state.sNode == nodeId)
-          //      this.setState({sNode : null});
-           // else {
-            Actions.addTarget(nodeId);
-           // }
+            if (sourceStore.sNode == nodeId)
+                Actions.addSource(null);
+            else {
+                Actions.addTarget(nodeId);
+              //  this.setState({tNode : nodeId});
+            }
         }
     };
 
@@ -86,6 +91,7 @@ class myGraph extends Component
     };
 
     onClickLink = function(source, target) {
+        console.log('Clicked link '+ source + ' - ' +  target);
        // window.alert(`Clicked link between ${source} and ${target}`);
     };
 
@@ -101,12 +107,11 @@ class myGraph extends Component
 
 // graph event callbacks
 
-
         const graphProps = {
             id :'graph', // id is mandatory, if no id is defined rd3g will throw an error
             data : data,
             config : this.state.config,
-            onClickNode : this.onClickNode.bind(this),
+            onClickNode : this.onClickNode,
             onClickLink : this.onClickLink.bind(this),
             onMouseOverNode : this.onMouseOverNode.bind(this),
             onMouseOutNode : this.onMouseOutNode.bind(this),

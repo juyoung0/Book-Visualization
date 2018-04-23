@@ -8,7 +8,9 @@ export const ActionType = {
     ADD_LINK: 'ADD_LINK',
     ADD_SOURCE: 'ADD_SOURCE',
     ADD_TARGET: 'ADD_TARGET',
-    ADD_NODE: 'ADD_NODE'
+    ADD_NODE: 'ADD_NODE',
+    SELECT_TEXT: 'SELECT_TEXT',
+    CHANGE_DATA: 'CHANGE_DATA'
 }
 
 export const Actions = {
@@ -42,6 +44,18 @@ export const Actions = {
             actionType: ActionType.ADD_LINK,
             s_value: sNode,
             t_value: tNode
+        })
+    },
+    selectText: (text) => {
+        appDispatcher.dispatch({
+            actionType: ActionType.SELECT_TEXT,
+            value: text
+        })
+    },
+    changeData: (data) => {
+        appDispatcher.dispatch({
+            actionType: ActionType.CHANGE_DATA,
+            data: data
         })
     }
 }
