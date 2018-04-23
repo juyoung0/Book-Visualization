@@ -35,7 +35,10 @@ class myGraph extends Component
         super(props);
         this.state = {
             config : myConfig,
-            data : '',
+            "data":  {
+                nodes: [],
+                links: []
+            },
             node : null,
             sNode : null,
             tNode : null,
@@ -61,8 +64,14 @@ class myGraph extends Component
         }
     }
 
+    componentDidMount(){
+        this.setState({data: data})
+        Actions.changeData(data);
+    }
+
     componentDidUpdate(){
-        Actions.changeData(this.state.data);
+        if (this.state.data != dataStore.data)
+            Actions.changeData(this.state.data);
     }
 
     onClickNode = function(nodeId) {

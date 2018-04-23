@@ -83,7 +83,6 @@ class MyAppBar extends Component {
         }
         dataStore.onChange = () => {
             this.setState({data: dataStore.data});
-            console.log(dataStore.data);
         }
     }
 
@@ -91,7 +90,12 @@ class MyAppBar extends Component {
     handleClick = event => {
         Actions.changeMenu(event.currentTarget.id);
         /*get Dragged text*/
-
+        var text = null;
+        if(window.getSelection().anchorNode){
+            var selection = window.getSelection();
+            text = selection.anchorNode.data;
+            text = text.substring( selection.anchorOffset,selection.focusOffset);
+        }
     //temporal code
         if(event.currentTarget.id == "add-relationship") {
             Actions.addLink(sourceStore.sNode, targetStore.tNode);
@@ -100,22 +104,20 @@ class MyAppBar extends Component {
 
         }else if(event.currentTarget.id == "add-node"){
             //Actions.selectText(text);
-            var selection = window.getSelection();
-            var text = selection.anchorNode.data;
-            text = text.substring( selection.anchorOffset,selection.focusOffset);
-            Actions.addNode(text);
+            if(text)
+                Actions.addNode(text);
         }else if(event.currentTarget.id == "add-speech"){
-            var selection = window.getSelection();
-            var text = selection.anchorNode.data;
-            text = text.substring( selection.anchorOffset,selection.focusOffset);
-            document.getElementById("dragged_text").innerHTML = text;
+            if(text){
+                document.getElementById("dragged_text").innerHTML = text;
 
-            if(this.state.speechOpen == false)
-                this.setState({ speechOpen : true, anchorEl : event.currentTarget});
-            else
-                this.setState({speechOpen : false});
+                if(this.state.speechOpen == false)
+                    this.setState({ speechOpen : true, anchorEl : event.currentTarget});
+                else
+                    this.setState({speechOpen : false});
 
-            this.setState({text : text});
+                this.setState({text : text});
+            }
+
           //  Actions.selectText(text);
         }
     };
@@ -207,7 +209,6 @@ class MyAppBar extends Component {
                         >
                             <Menu>
                                 {this.state.data.nodes.map((node) => {return (<MenuItem onClick={this.handleAnnotation} id={node.id} primaryText={node.id}/>);})}
-
                             </Menu>
                         </Popover>
                         </div>
