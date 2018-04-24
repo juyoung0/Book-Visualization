@@ -8,8 +8,8 @@ export const targetStore = {tNode:'', onChange:null}
 export const linkStore = {sNode:'', tNode:'', onChange:null}
 export const textStore = {text:'', onChange:null}
 export const dataStore = {data:{nodes: [], links: []}, onChange:null}
-export const selectedLinkStore = {sNode:'', tNode:'', onChange:null}
-export const selectedNodeStore = {node:'', onChange:null}
+export const selectedLinkStore = {sNode:'', tNode:'', focus:false, onChange:null}
+export const selectedNodeStore = {node:'', focus:false, onChange:null}
 
 appDispatcher.register(payload => {
     if(payload.actionType == ActionType.CHANGE_MENU){
@@ -66,6 +66,8 @@ appDispatcher.register(payload => {
         selectedLinkStore.sNode = payload.s_value
         selectedLinkStore.tNode = payload.t_value
         selectedLinkStore.onChange()
+    }else if(payload.actionType == ActionType.FOCUS_LINK){
+        selectedLinkStore.focus = payload.focus
     }
 })
 
@@ -73,5 +75,7 @@ appDispatcher.register(payload => {
     if(payload.actionType == ActionType.SELECT_NODE){
         selectedNodeStore.node = payload.value
         selectedNodeStore.onChange()
+    }else if(payload.actionType == ActionType.FOCUS_NODE){
+        selectedNodeStore.focus = payload.focus
     }
 })

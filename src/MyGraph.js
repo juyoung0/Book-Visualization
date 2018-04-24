@@ -57,16 +57,16 @@ class myGraph extends Component
             document.getElementById("link_info").innerHTML = "from " + sourceStore.sNode + " to " + targetStore.tNode ;
         }
         linkStore.onChange=()=>{
-            data.links.push({source:linkStore.sNode,target:linkStore.tNode})
+            data.links.push({source:linkStore.sNode, target:linkStore.tNode, emo:[], anno:[]})
             this.setState({data: data})
             document.getElementById("link_info").innerHTML = "";
           //  Actions.changeData(data);
         }
         selectedNodeStore.onChange=()=>{
-
+            document.getElementById("select_info").innerHTML = selectedNodeStore.node + " is selected";
         }
         selectedLinkStore.onChange=()=>{
-
+            document.getElementById("select_info").innerHTML = selectedLinkStore.sNode + " - " + selectedLinkStore.tNode + " is selected";
         }
     }
 
@@ -83,6 +83,9 @@ class myGraph extends Component
     onClickNode = function(nodeId) {
         console.log('Clicked node'+nodeId);
         Actions.selectNode(nodeId);
+        Actions.focusNode(true);
+        Actions.focusLink(false);
+
         if (!sourceStore.sNode) {
             Actions.addSource(nodeId);
            // this.setState({sNode : nodeId});
@@ -100,6 +103,8 @@ class myGraph extends Component
     onClickLink = function(source, target) {
         console.log('Clicked link '+ source + ' - ' +  target);
         Actions.selectLink(source, target);
+        Actions.focusNode(false);
+        Actions.focusLink(true);
         // window.alert(`Clicked link between ${source} and ${target}`);
     };
 

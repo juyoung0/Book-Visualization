@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import {Actions} from './actions';
-import {menuStore, sourceStore, dataStore, selectedNodeStore} from './stores'
+import {menuStore, sourceStore, dataStore, selectedNodeStore, selectedLinkStore} from './stores'
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
@@ -54,12 +54,17 @@ class CPaper extends React.Component {
 
     handleSubmit = () => {
         var data = dataStore.data;
-    console.log(data);
-    console.log(sourceStore.sNode);
         //sourceStore.sNode should be changed later (save in state)
-        var ind = data.nodes.findIndex(n => n.id == selectedNodeStore.node);
-        data.nodes[ind].emo.push(this.state.emotion);
-        data.nodes[ind].anno.push(this.state.annotation);
+        if(selectedNodeStore.focus){
+            var ind = data.nodes.findIndex(n => n.id == selectedNodeStore.node);
+            data.nodes[ind].emo.push(this.state.emotion);
+            data.nodes[ind].anno.push(this.state.annotation);
+        }else if(selectedLinkStore.focus){
+            var ind = data.links.findIndex(n => n.source == selectedLinkStore.sNode && n.target == selectedLinkStore.tNode );
+            data.links[ind].emo.push(this.state.emotion);
+            data.links[ind].anno.push(this.state.annotation);
+        }
+
         Actions.changeData(data);
         this.setState({open: false});
       //  Actions.changeMenu(null);
@@ -79,10 +84,17 @@ class CPaper extends React.Component {
                 onClick={this.handleSubmit}
             />,
         ];
+
+        var title = "";
+        if(selectedNodeStore.focus)
+            title = "Information of " + selectedNodeStore.node;
+        else if(selectedLinkStore.focus)
+            title = "Relationship between " + selectedLinkStore.sNode + " & " + selectedLinkStore.tNode;
+
         return (
 
             <Dialog
-                title={"Information of " + selectedNodeStore.node}
+                title={title}
                 actions={actions}
                 id='character_dialog'
                 modal={false}

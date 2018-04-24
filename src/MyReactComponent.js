@@ -229,7 +229,7 @@ class MyAppBar extends Component {
                     </ToolbarGroup>
 
                     <p id="link_info"></p>
-
+                    <p id="select_info"></p>
                     <ToolbarGroup>
                         <Toggle
                             label="a"

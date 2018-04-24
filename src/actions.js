@@ -12,7 +12,9 @@ export const ActionType = {
     SELECT_TEXT: 'SELECT_TEXT',
     CHANGE_DATA: 'CHANGE_DATA',
     SELECT_LINK: 'SELECT_LINK',
-    SELECT_NODE: 'SELECT_NODE'
+    SELECT_NODE: 'SELECT_NODE',
+    FOCUS_LINK: 'FOCUS_LINK',
+    FOCUS_NODE: 'FOCUS_NODE'
 }
 
 export const Actions = {
@@ -69,6 +71,16 @@ export const Actions = {
         appDispatcher.dispatch({
             actionType: ActionType.SELECT_NODE,
             value: node
+        })
+    },focusLink: (focus) => {
+        appDispatcher.dispatch({
+            actionType: ActionType.FOCUS_LINK,
+            focus: focus
+        })
+    },focusNode: (focus) => {
+        appDispatcher.dispatch({
+            actionType: ActionType.FOCUS_NODE,
+            focus: focus
         })
     }
 }
