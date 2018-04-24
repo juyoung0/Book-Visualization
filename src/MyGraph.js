@@ -3,13 +3,13 @@
  */
 import React, { Component } from 'react';
 import { Graph } from 'react-d3-graph';
-import {nodeStore, sourceStore, targetStore, linkStore, dataStore} from './stores'
+import {nodeStore, sourceStore, targetStore, linkStore, dataStore, selectedNodeStore, selectedLinkStore} from './stores'
 import {Actions} from './actions';
 
 
 // graph payload (with minimalist structure)
 const data = {
-    nodes: [{ id: 'Prince', speech:[] }],
+    nodes: [{ id: 'Prince', speech:[], emo:[], anno:[] }],
     links: []
 };
 
@@ -44,7 +44,7 @@ class myGraph extends Component
             tNode : null,
         };
         nodeStore.onChange=()=>{
-            data.nodes.push({id:nodeStore.node, speech:[]})
+            data.nodes.push({id:nodeStore.node, speech:[], emo:[], anno:[] })
             this.setState({data: data})
          //   Actions.changeData(data);
         }
@@ -62,10 +62,16 @@ class myGraph extends Component
             document.getElementById("link_info").innerHTML = "";
           //  Actions.changeData(data);
         }
+        selectedNodeStore.onChange=()=>{
+
+        }
+        selectedLinkStore.onChange=()=>{
+
+        }
     }
 
     componentDidMount(){
-        this.setState({data: data})
+        this.setState({data: data});
         Actions.changeData(data);
     }
 
@@ -76,7 +82,7 @@ class myGraph extends Component
 
     onClickNode = function(nodeId) {
         console.log('Clicked node'+nodeId);
-
+        Actions.selectNode(nodeId);
         if (!sourceStore.sNode) {
             Actions.addSource(nodeId);
            // this.setState({sNode : nodeId});
@@ -91,6 +97,12 @@ class myGraph extends Component
         }
     };
 
+    onClickLink = function(source, target) {
+        console.log('Clicked link '+ source + ' - ' +  target);
+        Actions.selectLink(source, target);
+        // window.alert(`Clicked link between ${source} and ${target}`);
+    };
+
     onMouseOverNode = function(nodeId) {
        // window.alert(`Mouse over node ${nodeId}`);
     };
@@ -99,10 +111,7 @@ class myGraph extends Component
        // window.alert(`Mouse out node ${nodeId}`);
     };
 
-    onClickLink = function(source, target) {
-        console.log('Clicked link '+ source + ' - ' +  target);
-       // window.alert(`Clicked link between ${source} and ${target}`);
-    };
+
 
     onMouseOverLink = function(source, target) {
        // window.alert(`Mouse over in link between ${source} and ${target}`);
@@ -121,7 +130,7 @@ class myGraph extends Component
             data : data,
             config : this.state.config,
             onClickNode : this.onClickNode,
-            onClickLink : this.onClickLink.bind(this),
+            onClickLink : this.onClickLink,
             onMouseOverNode : this.onMouseOverNode.bind(this),
             onMouseOutNode : this.onMouseOutNode.bind(this),
             onMouseOverLink : this.onMouseOverLink.bind(this),

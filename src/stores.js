@@ -8,6 +8,8 @@ export const targetStore = {tNode:'', onChange:null}
 export const linkStore = {sNode:'', tNode:'', onChange:null}
 export const textStore = {text:'', onChange:null}
 export const dataStore = {data:{nodes: [], links: []}, onChange:null}
+export const selectedLinkStore = {sNode:'', tNode:'', onChange:null}
+export const selectedNodeStore = {node:'', onChange:null}
 
 appDispatcher.register(payload => {
     if(payload.actionType == ActionType.CHANGE_MENU){
@@ -56,5 +58,20 @@ appDispatcher.register(payload => {
     if(payload.actionType == ActionType.CHANGE_DATA){
         dataStore.data = payload.data
         dataStore.onChange()
+    }
+})
+
+appDispatcher.register(payload => {
+    if(payload.actionType == ActionType.SELECT_LINK){
+        selectedLinkStore.sNode = payload.s_value
+        selectedLinkStore.tNode = payload.t_value
+        selectedLinkStore.onChange()
+    }
+})
+
+appDispatcher.register(payload => {
+    if(payload.actionType == ActionType.SELECT_NODE){
+        selectedNodeStore.node = payload.value
+        selectedNodeStore.onChange()
     }
 })

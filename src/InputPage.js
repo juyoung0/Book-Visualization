@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import {Actions} from './actions';
-import {menuStore} from './stores'
+import {menuStore, sourceStore, dataStore, selectedNodeStore} from './stores'
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
@@ -28,12 +28,12 @@ class CPaper extends React.Component {
         super(props);
         this.state = {
             open: false,
-            name: '',
+            emotion: '',
             annotation: ''
         };
 
         menuStore.onChange = () => {
-            if(menuStore.menu=="add-character")
+            if(menuStore.menu=="add-info")
                 this.setState({open: true});
         }
     }
@@ -51,8 +51,15 @@ class CPaper extends React.Component {
     }
 
     handleSubmit = () => {
+        var data = dataStore.data;
+    console.log(data);
+    console.log(sourceStore.sNode);
+        //sourceStore.sNode should be changed later (save in state)
+        var ind = data.nodes.findIndex(n => n.id == selectedNodeStore.node);
+        data.nodes[ind].emo.push(this.state.emotion);
+        data.nodes[ind].anno.push(this.state.annotation);
+        Actions.changeData(data);
         this.setState({open: false});
-        Actions.addNode(this.state.name);
       //  Actions.changeMenu(null);
     }
 
@@ -73,7 +80,7 @@ class CPaper extends React.Component {
         return (
 
             <Dialog
-                title="Dialog With Actions"
+                title={"Information of " + selectedNodeStore.node}
                 actions={actions}
                 id='character_dialog'
                 modal={false}
@@ -81,9 +88,10 @@ class CPaper extends React.Component {
                 onRequestClose={this.handleClose}
             >
                 <Paper zDepth={2}>
+                <h2>Emotion</h2>
                 <Slider defaultValue={0.5} />
-                <TextField id="name" hintText="Name" style={paperStyle} underlineShow={false} onChange={ this.handleChange.bind(this) } value={this.state.name}/>
                 <Divider />
+                <h2>Annotation</h2>
                 <TextField id="annotation" hintText="Annotation" style={paperStyle} underlineShow={false} onChange={ this.handleChange.bind(this) } value={this.state.annotation}/>
                 <Divider />
                 </Paper>

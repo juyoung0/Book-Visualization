@@ -10,7 +10,9 @@ export const ActionType = {
     ADD_TARGET: 'ADD_TARGET',
     ADD_NODE: 'ADD_NODE',
     SELECT_TEXT: 'SELECT_TEXT',
-    CHANGE_DATA: 'CHANGE_DATA'
+    CHANGE_DATA: 'CHANGE_DATA',
+    SELECT_LINK: 'SELECT_LINK',
+    SELECT_NODE: 'SELECT_NODE'
 }
 
 export const Actions = {
@@ -56,6 +58,17 @@ export const Actions = {
         appDispatcher.dispatch({
             actionType: ActionType.CHANGE_DATA,
             data: data
+        })
+    },selectLink: (sNode,tNode) => {
+        appDispatcher.dispatch({
+            actionType: ActionType.SELECT_LINK,
+            s_value: sNode,
+            t_value: tNode
+        })
+    },selectNode: (node) => {
+        appDispatcher.dispatch({
+            actionType: ActionType.SELECT_NODE,
+            value: node
         })
     }
 }

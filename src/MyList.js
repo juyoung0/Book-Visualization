@@ -2,23 +2,47 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import Menu, {MenuItem, MenuList} from 'material-ui/Menu';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import Slider from 'material-ui/Slider';
-import {sourceStore, dataStore} from './stores'
-
+import {sourceStore, dataStore, selectedNodeStore} from './stores'
+//import Subheader from 'material-ui/Subheader';
+//import Slider from 'material-ui-slider-label/Slider';
+import { cyan500 } from 'material-ui/styles/colors';
 
 const paperStyle = {
     height: '85%',
-    width: "85%",
+    width: "100%",
     margin: '7%',
     textAlign: 'center',
     display: 'inline-block',
+};
+
+const sliderStyles = {
+    subheader: {
+        textTransform: 'capitalize',
+    },
+    labelStyleOuter: {
+        width: '30px',
+        height: '30px',
+        borderRadius: '50% 50% 50% 0',
+        background: cyan500,
+        position: 'absolute',
+        transform: 'rotate(-45deg)',
+        top: '-40px',
+        left: '-9px',
+    },
+    labelStyleInner: {
+        transform: 'rotate(45deg)',
+        color: 'white',
+        textAlign: 'center',
+        position: 'relative',
+        top: '3px',
+        right: '0px',
+        fontSize: '10px',
+    },
 };
 
 var clickedPaper = null;
@@ -85,24 +109,35 @@ class ListItems extends React.Component {
     render()
     {
         const { anchorEl } = this.state;
-        var ind = dataStore.data.nodes.findIndex(n => n.id == sourceStore.sNode);
+        var ind = dataStore.data.nodes.findIndex(n => n.id == selectedNodeStore.node);
         var speechList = [];
+        var emoList = [];
+        var annoList = [];
 
-        if(ind>-1 && dataStore.data.nodes.length > 0)
+        if(ind>-1 && dataStore.data.nodes.length > 0) {
             speechList = dataStore.data.nodes[ind].speech;
+            emoList = dataStore.data.nodes[ind].emo;
+            annoList = dataStore.data.nodes[ind].anno;
+        }
 
-        console.log(speechList)
+        console.log(dataStore.data)
         return(
             <div>
                 <Menu id="main-menu">
-                    < MenuItem id="emotion" onClick={this.handleClick}> Emotion < / MenuItem >
-                    <Slider defaultValue={0.5} />
-                    <Divider />
                     < MenuItem id="speeches" onClick={this.handleClick}> Speech < / MenuItem >
                     <Menu>
                     {speechList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
                     </Menu>
                     <Divider />
+                    < MenuItem id="emotionss" onClick={this.handleClick}> Emotion < / MenuItem >
+                    <Menu>
+                    {emoList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
+                    </Menu>
+                    <Divider />
+                    < MenuItem id="annotations" onClick={this.handleClick}> Annotation < / MenuItem >
+                    <Menu>
+                    {annoList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
+                    </Menu>
                 </Menu>
             </div>
         );

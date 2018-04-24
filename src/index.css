@@ -51,3 +51,10 @@ body {
   top: 0;
 }
 
+.h2 {
+  fontSize: 24;
+  padding-top: 16;
+  padding-left: 16;
+  marginBottom: 12;
+  fontWeight: 400;
+}

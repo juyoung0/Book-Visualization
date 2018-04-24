@@ -22,6 +22,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import NodeAdd from 'material-ui/svg-icons/action/face';
 import LinkAdd from 'material-ui/svg-icons/action/supervisor-account';
 import SpeechAdd from 'material-ui/svg-icons/action/speaker-notes';
+import InfoAdd from 'material-ui/svg-icons/editor/mode-edit';
 
 var clickedPaper = null;
 var clickedMenu = null;
@@ -70,6 +71,7 @@ class MyAppBar extends Component {
         this.state = {
             "open": false,
             "clicked":null,
+            "input": false,
             "speechOpen":false,
             "data":  {
                 nodes: [],
@@ -91,11 +93,7 @@ class MyAppBar extends Component {
         Actions.changeMenu(event.currentTarget.id);
         /*get Dragged text*/
         var text = null;
-        if(window.getSelection().anchorNode){
-            var selection = window.getSelection();
-            text = selection.anchorNode.data;
-            text = text.substring( selection.anchorOffset,selection.focusOffset);
-        }
+
     //temporal code
         if(event.currentTarget.id == "add-relationship") {
             Actions.addLink(sourceStore.sNode, targetStore.tNode);
@@ -104,21 +102,31 @@ class MyAppBar extends Component {
 
         }else if(event.currentTarget.id == "add-node"){
             //Actions.selectText(text);
+            if(window.getSelection().anchorNode){
+                var selection = window.getSelection();
+                text = selection.anchorNode.data;
+                text = text.substring( selection.anchorOffset,selection.focusOffset);
+            }
             if(text)
                 Actions.addNode(text);
         }else if(event.currentTarget.id == "add-speech"){
+            if(window.getSelection().anchorNode){
+                var selection = window.getSelection();
+                text = selection.anchorNode.data;
+                text = text.substring( selection.anchorOffset,selection.focusOffset);
+            }
             if(text){
                // document.getElementById("dragged_text").innerHTML = text;
-
                 if(this.state.speechOpen == false)
                     this.setState({ speechOpen : true, anchorEl : event.currentTarget});
                 else
                     this.setState({speechOpen : false});
-
                 this.setState({text : text});
             }
 
           //  Actions.selectText(text);
+        }else if(event.currentTarget.id == "add-info"){
+
         }
     };
 
@@ -129,7 +137,7 @@ class MyAppBar extends Component {
         this.setState({speechOpen : false});
     };
 
-    handleAnnotation = event => {
+    handleSpeech = event => {
         var data = this.state.data;
         var ind = data.nodes.findIndex(n => n.id == event.currentTarget.id);
         data.nodes[ind].speech.push(this.state.text);
@@ -202,6 +210,9 @@ class MyAppBar extends Component {
                         <FloatingActionButton id="add-speech" onClick={this.handleClick} mini={true} label="Add Speech" style={styles.actionButton}>
                             <SpeechAdd />
                         </FloatingActionButton>
+                        <FloatingActionButton id="add-info" onClick={this.handleClick} mini={true} label="Add Information" style={styles.actionButton}>
+                            <InfoAdd />
+                        </FloatingActionButton>
                         <Popover
                             open={this.state.speechOpen}
                             anchorEl={this.state.anchorEl}
@@ -210,9 +221,10 @@ class MyAppBar extends Component {
                             onRequestClose={this.handleRequestClose}
                         >
                             <Menu>
-                                {this.state.data.nodes.map((node) => {return (<MenuItem onClick={this.handleAnnotation} id={node.id} primaryText={node.id}/>);})}
+                                {this.state.data.nodes.map((node) => {return (<MenuItem onClick={this.handleSpeech} id={node.id} primaryText={node.id}/>);})}
                             </Menu>
                         </Popover>
+
                         </div>
                     </ToolbarGroup>
 
@@ -234,7 +246,7 @@ class MyAppBar extends Component {
                 </Toolbar>
 
                 <Drawer width={300} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-                    <AppBar title="Drawing Tool"
+                    <AppBar title="Informations"
                         onLeftIconButtonClick = {this.handleToggle}/>
                     <ListItems/>
                 </Drawer>
