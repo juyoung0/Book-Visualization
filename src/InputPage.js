@@ -13,6 +13,8 @@ import Slider from 'material-ui/Slider';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
+import Mood from 'material-ui/svg-icons/social/mood';
+import MoodBad from 'material-ui/svg-icons/social/mood-bad';
 
 const paperStyle = {
     height: '85%',
@@ -89,7 +91,12 @@ class CPaper extends React.Component {
             >
                 <Paper zDepth={2}>
                 <h2>Emotion</h2>
-                <Slider defaultValue={0.5} />
+                <div class="row">
+                        <div class="columnIcon"><MoodBad /></div>
+                        <div class="column"><Slider defaultValue={0.5} /></div>
+                        <div class="columnIcon"><Mood /></div>
+
+                </div>
                 <Divider />
                 <h2>Annotation</h2>
                 <TextField id="annotation" hintText="Annotation" style={paperStyle} underlineShow={false} onChange={ this.handleChange.bind(this) } value={this.state.annotation}/>
