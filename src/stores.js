@@ -7,7 +7,7 @@ export const sourceStore = {sNode:'', onChange:null}
 export const targetStore = {tNode:'', onChange:null}
 export const linkStore = {sNode:'', tNode:'', onChange:null}
 export const textStore = {text:'', onChange:null}
-export const dataStore = {data:'', onChange:null}
+export const dataStore = {data:{nodes: [], links: []}, onChange:null}
 
 appDispatcher.register(payload => {
     if(payload.actionType == ActionType.CHANGE_MENU){

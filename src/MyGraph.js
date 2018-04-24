@@ -9,8 +9,8 @@ import {Actions} from './actions';
 
 // graph payload (with minimalist structure)
 const data = {
-    nodes: [{ id: 'Harry', speech:[] }, { id: 'Sally', speech:[] }, { id: 'Alice', speech:[]}],
-    links: [{ source: 'Harry', target: 'Sally' }, { source: 'Harry', target: 'Alice' }]
+    nodes: [{ id: 'Prince', speech:[] }],
+    links: []
 };
 
 // the graph configuration, you only need to pass down properties
@@ -35,7 +35,7 @@ class myGraph extends Component
         super(props);
         this.state = {
             config : myConfig,
-            "data":  {
+            data:  {
                 nodes: [],
                 links: []
             },

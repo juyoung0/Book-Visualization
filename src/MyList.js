@@ -10,6 +10,7 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import Slider from 'material-ui/Slider';
+import {sourceStore, dataStore} from './stores'
 
 
 const paperStyle = {
@@ -57,10 +58,20 @@ const paper3 = (
 );
 
 
+
 class ListItems extends React.Component {
-    state = {
-        open: false,
-    };
+
+    constructor(props) {
+        super(props);
+        console.log(props)
+        this.state = {
+            open: false,
+            data:  {
+                nodes: [],
+                links: []
+            },
+        };
+    }
 
     handleClick = event => {
         clickedMenu = event.currentTarget.id;
@@ -74,18 +85,30 @@ class ListItems extends React.Component {
     render()
     {
         const { anchorEl } = this.state;
+        var ind = dataStore.data.nodes.findIndex(n => n.id == sourceStore.sNode);
+        var speechList = [];
 
+        if(ind>-1 && dataStore.data.nodes.length > 0)
+            speechList = dataStore.data.nodes[ind].speech;
+
+        console.log(speechList)
         return(
             <div>
                 <Menu id="main-menu">
-                    < MenuItem id="character" onClick={this.handleClick}> Character < / MenuItem >
-                    < MenuItem id="relationship" onClick={this.handleClick}> Relationship < / MenuItem >
-                    < MenuItem id="add-annotation" onClick={this.handleClick}> Add Annotation < / MenuItem >
-                    < MenuItem id="make-group" onClick={this.handleClick}> Make Group < / MenuItem >
+                    < MenuItem id="emotion" onClick={this.handleClick}> Emotion < / MenuItem >
+                    <Slider defaultValue={0.5} />
+                    <Divider />
+                    < MenuItem id="speeches" onClick={this.handleClick}> Speech < / MenuItem >
+                    <Menu>
+                    {speechList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
+                    </Menu>
+                    <Divider />
                 </Menu>
             </div>
         );
     }
 };
+
+
 
 export default ListItems;
