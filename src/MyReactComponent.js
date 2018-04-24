@@ -108,7 +108,7 @@ class MyAppBar extends Component {
                 Actions.addNode(text);
         }else if(event.currentTarget.id == "add-speech"){
             if(text){
-                document.getElementById("dragged_text").innerHTML = text;
+               // document.getElementById("dragged_text").innerHTML = text;
 
                 if(this.state.speechOpen == false)
                     this.setState({ speechOpen : true, anchorEl : event.currentTarget});
@@ -176,7 +176,9 @@ class MyAppBar extends Component {
             document.getElementById("droptarget").innerHTML = data;
         }
     }
-
+//<p draggable="true" id="dragged_text" onDragStart={this.dragStart} onDrag={this.drag} onDragEnter={this.dragEnter} onDragEnd={this.dragEnd} onDragLeave={this.dragLeave}>text</p>
+//<p  id="demo"></p>
+//    <p id="droptarget" onDrop={this.drop} onDragOver={this.dragOver} className="droptarget"></p>
     render(){
 
         return(
@@ -213,9 +215,7 @@ class MyAppBar extends Component {
                         </Popover>
                         </div>
                     </ToolbarGroup>
-                    <p draggable="true" id="dragged_text" onDragStart={this.dragStart} onDrag={this.drag} onDragEnter={this.dragEnter} onDragEnd={this.dragEnd} onDragLeave={this.dragLeave}>text</p>
-                    <p  id="demo"></p>
-                    <p id="droptarget" onDrop={this.drop} onDragOver={this.dragOver} className="droptarget"></p>
+
                     <p id="link_info"></p>
 
                     <ToolbarGroup>
