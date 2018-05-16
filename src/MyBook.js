@@ -19,7 +19,6 @@ render()
     {
         var myTxt = require("./static/littlePrince.txt");
         return (
-
             <TextFileReader txt={myTxt} />
         );
     }

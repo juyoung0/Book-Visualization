@@ -15,6 +15,8 @@ import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types';
 import Mood from 'material-ui/svg-icons/social/mood';
 import MoodBad from 'material-ui/svg-icons/social/mood-bad';
+import SearchRadiusInput from './MySlider';
+
 
 const paperStyle = {
     height: '85%',
@@ -30,7 +32,7 @@ class CPaper extends React.Component {
         super(props);
         this.state = {
             open: false,
-            emotion: '',
+            emotion: 0,
             annotation: ''
         };
 
@@ -49,6 +51,7 @@ class CPaper extends React.Component {
 
     handleClose = () => {
         this.setState({open: false});
+        this.setState({emotion:0});
       //  Actions.changeMenu(null);
     }
 
@@ -67,8 +70,12 @@ class CPaper extends React.Component {
 
         Actions.changeData(data);
         this.setState({open: false});
+        this.setState({emotion:0});
       //  Actions.changeMenu(null);
     }
+
+    handleSlide = (event, emotion) => this.setState({ emotion });
+    handleSlideStop = () => this.props.update(this.state.emotion);
 
     render() {
         const actions = [
@@ -103,11 +110,11 @@ class CPaper extends React.Component {
             >
                 <Paper zDepth={2}>
                 <h2>Emotion</h2>
-                <div class="row">
-                        <div class="columnIcon"><MoodBad /></div>
-                        <div class="column"><Slider defaultValue={0.5} /></div>
-                        <div class="columnIcon"><Mood /></div>
 
+                <div class="row">
+                        <div className="columnIcon"><MoodBad /></div>
+                        <div className="columnSlider"><SearchRadiusInput radius={this.state.emotion} onChange={this.handleSlide} onDragStop={this.handleSlideStop}/></div>
+                        <div className="columnIcon"><Mood /></div>
                 </div>
                 <Divider />
                 <h2>Annotation</h2>

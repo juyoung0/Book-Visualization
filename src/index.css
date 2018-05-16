@@ -21,11 +21,11 @@ body {
 .book {
   overflow: auto;
   height: auto;
-  padding: .5rem;
+  padding: 10px;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
   float: left;
-  max-width: 100%;
+  max-width: 50%;
   margin : 10px;
 }
 
@@ -47,7 +47,7 @@ body {
   height: 100%;
   position: absolute;
   left: 50%;
-  margin-left: -3px;
+  margin-left: 20px;
   top: 0;
 }
 
@@ -70,9 +70,14 @@ body {
 }
 .row {
   display: flex;
+  text-align: center;
 }
 
-.column {
+.col {
+  width: 50%;
+}
+
+.columnSlider {
   flex: 80%;
   margin: auto;
 }
@@ -80,4 +85,8 @@ body {
 .columnIcon {
   flex: 10%;
   margin: auto;
+  text-align: center;
+  display:table-cell;
+  vertical-align:middle;
 }
+

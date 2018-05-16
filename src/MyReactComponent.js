@@ -123,10 +123,9 @@ class MyAppBar extends Component {
                     this.setState({speechOpen : false});
                 this.setState({text : text});
             }
-
           //  Actions.selectText(text);
         }else if(event.currentTarget.id == "add-info"){
-
+           // Actions.changeMenu(event.currentTarget.id);
         }
     };
 
@@ -245,7 +244,7 @@ class MyAppBar extends Component {
                     </ToolbarGroup>
                 </Toolbar>
 
-                <Drawer width={300} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
+                <Drawer width={600} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
                     <AppBar title="Informations"
                         onLeftIconButtonClick = {this.handleToggle}/>
                     <ListItems/>
@@ -264,9 +263,7 @@ const MyReactComponent = () => (
         <div className='book'><MyBook/></div>
         <div className='vl'><MyGraph/></div>
     </div>
-    <RPaper />
-    <CPaper />
-
+        <CPaper />
     </div>
 );
 

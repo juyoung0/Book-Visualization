@@ -48,41 +48,6 @@ const sliderStyles = {
 var clickedPaper = null;
 var clickedMenu = null;
 
-const paper1 = (
-    <Paper zDepth={2}>
-    <Slider defaultValue={0.5} />
-    <TextField hintText="First name" style={paperStyle} underlineShow={false} />
-    <Divider />
-    <TextField hintText="Middle name" style={paperStyle} underlineShow={false} />
-    <Divider />
-    <TextField hintText="Last name" style={paperStyle} underlineShow={false} />
-    <Divider />
-    <TextField hintText="Email address" style={paperStyle} underlineShow={false} />
-    <Divider />
-    </Paper>
-);
-
-const paper2 = (
-    <Paper zDepth={2}>
-    <TextField hintText="name" style={paperStyle} underlineShow={false} />
-    <Divider />
-    <TextField hintText="name" style={paperStyle} underlineShow={false} />
-    <Divider />
-    <TextField hintText="name" style={paperStyle} underlineShow={false} />
-    <Divider />
-    <TextField hintText="address" style={paperStyle} underlineShow={false} />
-    <Divider />
-    </Paper>
-);
-
-const paper3 = (
-    <Paper zDepth={2}>
-        <TextField hintText="Annotation" style={paperStyle} underlineShow={false} />
-    </Paper>
-);
-
-
-
 class ListItems extends React.Component {
 
     constructor(props) {
