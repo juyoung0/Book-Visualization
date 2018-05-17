@@ -18,6 +18,7 @@ import MoodBad from 'material-ui/svg-icons/social/mood-bad';
 import SearchRadiusInput from './MySlider';
 
 
+
 const paperStyle = {
     height: '85%',
     width: "85%",

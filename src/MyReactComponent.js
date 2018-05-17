@@ -11,7 +11,7 @@ import MyBook from './MyBook';
 import CPaper from './InputPage';
 import RPaper from './InputPage2';
 import ListItems from './MyList';
-import {menuStore, nodeStore, linkStore, sourceStore, targetStore, textStore, dataStore} from './stores'
+import {menuStore, nodeStore, linkStore, sourceStore, targetStore, textStore, dataStore, selectedNodeStore} from './stores'
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
@@ -23,9 +23,10 @@ import NodeAdd from 'material-ui/svg-icons/action/face';
 import LinkAdd from 'material-ui/svg-icons/action/supervisor-account';
 import SpeechAdd from 'material-ui/svg-icons/action/speaker-notes';
 import InfoAdd from 'material-ui/svg-icons/editor/mode-edit';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
-var clickedPaper = null;
-var clickedMenu = null;
+
 
 const styles = {
     block: {
@@ -63,7 +64,6 @@ const styles = {
     }
 };
 
-
 class MyAppBar extends Component {
 
     constructor(props){
@@ -71,6 +71,9 @@ class MyAppBar extends Component {
         this.state = {
             "open": false,
             "clicked":null,
+            "dialog1":false,
+            "dialog2":false,
+            "dialog3":false,
             "input": false,
             "speechOpen":false,
             "data":  {
@@ -80,25 +83,31 @@ class MyAppBar extends Component {
             "text": ""
         };
 
-        menuStore.onChange = () => {
-            this.setState({clicked: menuStore.menu});
-        }
+        // menuStore.onChange = () => {
+        //     this.setState({clicked: menuStore.menu});
+        // }
+
         dataStore.onChange = () => {
             this.setState({data: dataStore.data});
         }
     }
 
     handleToggle = () => this.setState({open: !this.state.open});
+
     handleClick = event => {
-        Actions.changeMenu(event.currentTarget.id);
+       // Actions.changeMenu(event.currentTarget.id);
         /*get Dragged text*/
         var text = null;
 
     //temporal code
         if(event.currentTarget.id == "add-relationship") {
-            Actions.addLink(sourceStore.sNode, targetStore.tNode);
-            Actions.addSource(null);
-            Actions.addTarget(null);
+            if(!sourceStore.sNode && !targetStore.tNode)
+                this.setState({dialog3: true});
+            else {
+                Actions.addLink(sourceStore.sNode, targetStore.tNode);
+                Actions.addSource(null);
+                Actions.addTarget(null);
+            }
 
         }else if(event.currentTarget.id == "add-node"){
             //Actions.selectText(text);
@@ -107,8 +116,12 @@ class MyAppBar extends Component {
                 text = selection.anchorNode.data;
                 text = text.substring( selection.anchorOffset,selection.focusOffset);
             }
+
             if(text)
                 Actions.addNode(text);
+            else
+                this.setState({dialog2: true});
+
         }else if(event.currentTarget.id == "add-speech"){
             if(window.getSelection().anchorNode){
                 var selection = window.getSelection();
@@ -122,15 +135,23 @@ class MyAppBar extends Component {
                 else
                     this.setState({speechOpen : false});
                 this.setState({text : text});
-            }
+            }else
+                this.setState({dialog2: true});
+
           //  Actions.selectText(text);
         }else if(event.currentTarget.id == "add-info"){
-           // Actions.changeMenu(event.currentTarget.id);
+            if(!selectedNodeStore.node)
+                this.setState({dialog1: true});
+            else
+                Actions.changeMenu(event.currentTarget.id);
         }
     };
 
     handleClose = () => {
         this.setState({input: false});
+        this.setState({dialog1: false});
+        this.setState({dialog2: false});
+        this.setState({dialog3: false});
     };
     handleRequestClose = () => {
         this.setState({speechOpen : false});
@@ -188,6 +209,28 @@ class MyAppBar extends Component {
 //    <p id="droptarget" onDrop={this.drop} onDragOver={this.dragOver} className="droptarget"></p>
     render(){
 
+        const action1 = [
+            <FlatButton
+                label="Okay"
+                primary={true}
+                onClick={this.handleClose}
+            />,
+        ];
+        const action2 = [
+            <FlatButton
+                label="Okay"
+                primary={true}
+                onClick={this.handleClose}
+            />,
+        ];
+        const action3 = [
+            <FlatButton
+                label="Okay"
+                primary={true}
+                onClick={this.handleClose}
+            />,
+        ];
+
         return(
             <div className="app-bar">
                 <AppBar
@@ -243,7 +286,36 @@ class MyAppBar extends Component {
                         <RaisedButton label="PLAY STORY" primary={true} />
                     </ToolbarGroup>
                 </Toolbar>
-
+                <div>
+                    <Dialog
+                        actions={action1}
+                        modal={false}
+                        open={this.state.dialog1}
+                        onRequestClose={this.handleClose}
+                    >
+                    You should select Character
+                    </Dialog>
+                </div>
+                <div>
+                    <Dialog
+                        actions={action2}
+                        modal={false}
+                        open={this.state.dialog2}
+                        onRequestClose={this.handleClose}
+                    >
+                    You should drag text
+                </Dialog>
+                </div>
+                <div>
+                <Dialog
+                    actions={action3}
+                    modal={false}
+                    open={this.state.dialog3}
+                    onRequestClose={this.handleClose}
+                >
+                You should select source & target Character correctly
+                </Dialog>
+                </div>
                 <Drawer width={600} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
                     <AppBar title="Informations"
                         onLeftIconButtonClick = {this.handleToggle}/>

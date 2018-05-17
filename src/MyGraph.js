@@ -43,6 +43,7 @@ class myGraph extends Component
             sNode : null,
             tNode : null,
         };
+
         nodeStore.onChange=()=>{
             data.nodes.push({id:nodeStore.node, speech:[], emo:[], anno:[] })
             this.setState({data: data})

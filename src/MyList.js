@@ -52,7 +52,7 @@ class ListItems extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
+        console.log(props);
         this.state = {
             open: false,
             data:  {
@@ -94,14 +94,9 @@ class ListItems extends React.Component {
                     {speechList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
                     </Menu>
                     <Divider />
-                    < MenuItem id="emotionss" onClick={this.handleClick}> Emotion < / MenuItem >
+                    < MenuItem id="emotions" onClick={this.handleClick}> Emotion < / MenuItem >
                     <Menu>
-                    {emoList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
-                    </Menu>
-                    <Divider />
-                    < MenuItem id="annotations" onClick={this.handleClick}> Annotation < / MenuItem >
-                    <Menu>
-                    {annoList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
+                    {emoList.map((s,i) => { return (<div><MenuItem id={annoList[i]} primaryText={emoList[i] + " : " + annoList[i]} /></div>); })}
                     </Menu>
                 </Menu>
             </div>
