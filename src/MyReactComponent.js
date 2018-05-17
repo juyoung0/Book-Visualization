@@ -101,7 +101,7 @@ class MyAppBar extends Component {
 
     //temporal code
         if(event.currentTarget.id == "add-relationship") {
-            if(!sourceStore.sNode && !targetStore.tNode)
+            if(!sourceStore.sNode || !targetStore.tNode)
                 this.setState({dialog3: true});
             else {
                 Actions.addLink(sourceStore.sNode, targetStore.tNode);
