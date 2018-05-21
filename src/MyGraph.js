@@ -9,7 +9,7 @@ import {Actions} from './actions';
 
 // graph payload (with minimalist structure)
 const data = {
-    nodes: [{ id: 'Prince', speech:[], emo:[], anno:[] }],
+    nodes: [{ id: 'Me', speech:[], emo:[], anno:[] }],
     links: []
 };
 
@@ -18,7 +18,7 @@ const data = {
 const myConfig = {
     nodeHighlightBehavior: true,
     width : 1000,
-    height : 1500,
+    height : 1000,
     node: {
         color: 'lightgreen',
         size: 220,

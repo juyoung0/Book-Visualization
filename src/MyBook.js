@@ -17,7 +17,7 @@ class MyBook extends Component{
 
 render()
     {
-        var myTxt = require("./static/littlePrince.txt");
+        var myTxt = require("./static/littlePrince_kr.txt");
         return (
             <TextFileReader txt={myTxt} />
         );
