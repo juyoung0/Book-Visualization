@@ -14,7 +14,8 @@ export const ActionType = {
     SELECT_LINK: 'SELECT_LINK',
     SELECT_NODE: 'SELECT_NODE',
     FOCUS_LINK: 'FOCUS_LINK',
-    FOCUS_NODE: 'FOCUS_NODE'
+    FOCUS_NODE: 'FOCUS_NODE',
+    REMOVE_NODE: 'REMOVE_NODE'
 }
 
 export const Actions = {
@@ -81,6 +82,11 @@ export const Actions = {
         appDispatcher.dispatch({
             actionType: ActionType.FOCUS_NODE,
             focus: focus
+        })
+    },removeNode: (node) => {
+        appDispatcher.dispatch({
+            actionType: ActionType.REMOVE_NODE,
+            value: node
         })
     }
 }

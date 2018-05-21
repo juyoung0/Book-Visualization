@@ -114,7 +114,7 @@ class CPaper extends React.Component {
 
                 <div class="row">
                         <div className="columnIcon"><MoodBad /></div>
-                        <div className="columnSlider"><SearchRadiusInput radius={this.state.emotion} onChange={this.handleSlide} onDragStop={this.handleSlideStop}/></div>
+                        <div className="columnSlider"><SearchRadiusInput radius={this.state.emotion} onChange={this.handleSlide.bind(this)} onDragStop={this.handleSlideStop}/></div>
                         <div className="columnIcon"><Mood /></div>
                 </div>
                 <Divider />

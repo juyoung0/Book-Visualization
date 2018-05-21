@@ -23,6 +23,7 @@ import NodeAdd from 'material-ui/svg-icons/action/face';
 import LinkAdd from 'material-ui/svg-icons/action/supervisor-account';
 import SpeechAdd from 'material-ui/svg-icons/action/speaker-notes';
 import InfoAdd from 'material-ui/svg-icons/editor/mode-edit';
+import NodeRemove from 'material-ui/svg-icons/action/delete';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -114,11 +115,12 @@ class MyAppBar extends Component {
             if(window.getSelection().anchorNode){
                 var selection = window.getSelection();
                 text = selection.anchorNode.data;
+            }
+            if(text){
                 text = text.substring( selection.anchorOffset,selection.focusOffset);
+                Actions.addNode(text);
             }
 
-            if(text)
-                Actions.addNode(text);
             else
                 this.setState({dialog2: true});
 
@@ -126,10 +128,10 @@ class MyAppBar extends Component {
             if(window.getSelection().anchorNode){
                 var selection = window.getSelection();
                 text = selection.anchorNode.data;
-                text = text.substring( selection.anchorOffset,selection.focusOffset);
             }
             if(text){
-               // document.getElementById("dragged_text").innerHTML = text;
+                text = text.substring( selection.anchorOffset,selection.focusOffset);
+                // document.getElementById("dragged_text").innerHTML = text;
                 if(this.state.speechOpen == false)
                     this.setState({ speechOpen : true, anchorEl : event.currentTarget});
                 else
@@ -144,6 +146,11 @@ class MyAppBar extends Component {
                 this.setState({dialog1: true});
             else
                 Actions.changeMenu(event.currentTarget.id);
+        }else if(event.currentTarget.id == "delete-node"){
+            if(!selectedNodeStore.node)
+                this.setState({dialog1: true});
+            else
+                Actions.removeNode(selectedNodeStore.node);
         }
     };
 
@@ -242,7 +249,7 @@ class MyAppBar extends Component {
                     <ToolbarGroup firstChild={true}>
                     </ToolbarGroup>
                     <ToolbarGroup>
-                        <FloatingActionButton id="add-node" onClick={this.handleClick} mini={true} label="Add Text" style={styles.actionButton}>
+                        <FloatingActionButton id="add-node" onClick={this.handleClick} mini={true} label="Add Node" style={styles.actionButton}>
                             <NodeAdd />
                         </FloatingActionButton>
                         <FloatingActionButton id="add-relationship" onClick={this.handleClick} mini={true} label="Add Relationship" style={styles.actionButton}>
@@ -254,6 +261,9 @@ class MyAppBar extends Component {
                         </FloatingActionButton>
                         <FloatingActionButton id="add-info" onClick={this.handleClick} mini={true} label="Add Information" style={styles.actionButton}>
                             <InfoAdd />
+                        </FloatingActionButton>
+                        <FloatingActionButton id="delete-node" onClick={this.handleClick} mini={true} label="Remove Node" style={styles.actionButton}>
+                            <NodeRemove/>
                         </FloatingActionButton>
                         <Popover
                             open={this.state.speechOpen}

@@ -3,13 +3,13 @@
  */
 import React, { Component } from 'react';
 import { Graph } from 'react-d3-graph';
-import {nodeStore, sourceStore, targetStore, linkStore, dataStore, selectedNodeStore, selectedLinkStore} from './stores'
+import {nodeStore, sourceStore, targetStore, linkStore, dataStore, selectedNodeStore, selectedLinkStore, removeNodeStore} from './stores'
 import {Actions} from './actions';
 
 
 // graph payload (with minimalist structure)
 const data = {
-    nodes: [{ id: 'Me', speech:[], emo:[], anno:[] }],
+    nodes: [{ id: '나', speech:[], emo:[], anno:[] }],
     links: []
 };
 
@@ -69,6 +69,37 @@ class myGraph extends Component
         selectedLinkStore.onChange=()=>{
             document.getElementById("select_info").innerHTML = selectedLinkStore.sNode + " - " + selectedLinkStore.tNode + " is selected";
         }
+        removeNodeStore.onChange=()=>{
+            /*remove link*/
+            var inds = this.getSourceIndexes(data.links, removeNodeStore.node);
+            inds.reverse()
+            inds.map(function(i){ data.links.splice(i, 1) })
+            inds = this.getTargetIndexes(data.links, removeNodeStore.node);
+            inds.reverse()
+            inds.map(function(i){ data.links.splice(i, 1) })
+
+            /*remove node*/
+            var ind = data.nodes.map(function(e) { return e.id; }).indexOf(removeNodeStore.node);
+            data.nodes.splice(ind, 1)
+            this.setState({data: data})
+        }
+
+    }
+
+    getSourceIndexes(arr, val) {
+        var indexes = [], i;
+        for(i = 0; i < arr.length; i++)
+            if (arr[i].source === val)
+                indexes.push(i);
+        return indexes;
+    }
+
+    getTargetIndexes(arr, val) {
+        var indexes = [], i;
+        for(i = 0; i < arr.length; i++)
+            if (arr[i].target === val)
+                indexes.push(i);
+        return indexes;
     }
 
     componentDidMount(){
