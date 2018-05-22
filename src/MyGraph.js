@@ -47,6 +47,8 @@ class myGraph extends Component
         nodeStore.onChange=()=>{
             data.nodes.push({id:nodeStore.node, speech:[], emo:[], anno:[] })
             this.setState({data: data})
+            console.log(JSON.stringify(data));
+
          //   Actions.changeData(data);
         }
         sourceStore.onChange=()=>{
@@ -62,6 +64,7 @@ class myGraph extends Component
             this.setState({data: data})
             document.getElementById("link_info").innerHTML = "";
           //  Actions.changeData(data);
+            console.log(JSON.stringify(data));
         }
         selectedNodeStore.onChange=()=>{
             document.getElementById("select_info").innerHTML = selectedNodeStore.node + " is selected";
@@ -82,6 +85,8 @@ class myGraph extends Component
             var ind = data.nodes.map(function(e) { return e.id; }).indexOf(removeNodeStore.node);
             data.nodes.splice(ind, 1)
             this.setState({data: data})
+
+            console.log(JSON.stringify(data));
         }
 
     }
