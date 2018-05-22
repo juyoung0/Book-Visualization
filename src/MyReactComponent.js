@@ -149,8 +149,13 @@ class MyAppBar extends Component {
         }else if(event.currentTarget.id == "delete-node"){
             if(!selectedNodeStore.node)
                 this.setState({dialog1: true});
-            else
+            else {
                 Actions.removeNode(selectedNodeStore.node);
+                if(sourceStore.sNode == selectedNodeStore.node)
+                    Actions.addSource(null);
+                if(targetStore.tNode == selectedNodeStore.node)
+                    Actions.addTarget(null);
+            }
         }
     };
 
