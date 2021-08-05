@@ -15,7 +15,8 @@
 
 ### User Study ###
 두 명의 피실험자와 능동적 읽기 (종이에 필기 / Bookvis 시스템 사용)에 대한 실험을 진행하였습니다.
-자세한 내용은 여기서 볼 수 있습니다.
+[자세한 내용은 여기서 볼 수 있습니다.](https://github.com/juyoung0/bookvis/blob/1b26ffebd01499f4a36e8b2fa50152754fb05627/doc/Bookvis_FinalPaper.pdf)
+
 <img width="1111" alt="session1fig" src="https://user-images.githubusercontent.com/8486747/128363464-b75ff667-308e-4dc1-873f-b0bca7d45de5.png">
 
 <img width="967" alt="session2fig" src="https://user-images.githubusercontent.com/8486747/128363473-70fdcfdf-4d41-4dbf-9503-4dd2d2de08eb.png">
