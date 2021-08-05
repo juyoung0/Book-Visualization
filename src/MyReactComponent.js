@@ -287,19 +287,19 @@ class MyAppBar extends Component {
 
                     <p id="link_info"></p>
                     <p id="select_info"></p>
-                    <ToolbarGroup>
-                        <Toggle
-                            label="a"
-                            defaultToggled={true}
-                            style={styles.toggle}
-                        />
-                        <Toggle
-                            label="b"
-                            defaultToggled={true}
-                            style={styles.toggle}
-                        />
-                        <RaisedButton label="PLAY STORY" primary={true} />
-                    </ToolbarGroup>
+                    {/*<ToolbarGroup>*/}
+                    {/*    <Toggle*/}
+                    {/*        label="a"*/}
+                    {/*        defaultToggled={true}*/}
+                    {/*        style={styles.toggle}*/}
+                    {/*    />*/}
+                    {/*    <Toggle*/}
+                    {/*        label="b"*/}
+                    {/*        defaultToggled={true}*/}
+                    {/*        style={styles.toggle}*/}
+                    {/*    />*/}
+                    {/*    <RaisedButton label="PLAY STORY" primary={true} />*/}
+                    {/*</ToolbarGroup>*/}
                 </Toolbar>
                 <div>
                     <Dialog

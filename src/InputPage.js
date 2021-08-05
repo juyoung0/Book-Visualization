@@ -17,8 +17,6 @@ import Mood from 'material-ui/svg-icons/social/mood';
 import MoodBad from 'material-ui/svg-icons/social/mood-bad';
 import SearchRadiusInput from './MySlider';
 
-
-
 const paperStyle = {
     height: '85%',
     width: "85%",
@@ -26,6 +24,10 @@ const paperStyle = {
     textAlign: 'center',
     display: 'inline-block',
 };
+
+const menuStyle = {
+    margin: '7px',
+}
 
 class CPaper extends React.Component {
 
@@ -95,7 +97,7 @@ class CPaper extends React.Component {
 
         var title = "";
         if(selectedNodeStore.focus)
-            title = "Information of " + selectedNodeStore.node;
+            title = selectedNodeStore.node +"에 대한 나의 생각";
         else if(selectedLinkStore.focus)
             title = "Relationship between " + selectedLinkStore.sNode + " & " + selectedLinkStore.tNode;
 
@@ -110,7 +112,7 @@ class CPaper extends React.Component {
                 onRequestClose={this.handleClose}
             >
                 <Paper zDepth={2}>
-                <h2>Emotion</h2>
+                <h2 style={menuStyle}>Emotion</h2>
 
                 <div class="row">
                         <div className="columnIcon"><MoodBad /></div>
@@ -118,7 +120,7 @@ class CPaper extends React.Component {
                         <div className="columnIcon"><Mood /></div>
                 </div>
                 <Divider />
-                <h2>Annotation</h2>
+                <h2 style={menuStyle}>Annotation</h2>
                 <TextField id="annotation" hintText="Annotation" style={paperStyle} underlineShow={false} onChange={ this.handleChange.bind(this) } value={this.state.annotation}/>
                 <Divider />
                 </Paper>

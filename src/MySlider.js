@@ -25,9 +25,9 @@ const styles = {
         color: 'white',
         textAlign: 'center',
         position: 'relative',
-        top: '3px',
-        right: '0px',
-        fontSize: '10px',
+        top: '5px',
+        right: '-3px',
+        fontSize: '12px',
     },
 };
 

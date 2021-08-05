@@ -14,8 +14,8 @@ import StarBorder from 'material-ui-icons/StarBorder';
 
 export const ListItems = (
     <MenuItem>Add Character</MenuItem>
-<MenuItem>Add Relationship</MenuItem>
-<MenuItem>Add Annotation</MenuItem>
-<MenuItem>Make Group</MenuItem>
+    <MenuItem>Add Relationship</MenuItem>
+    <MenuItem>Add Annotation</MenuItem>
+    <MenuItem>Make Group</MenuItem>
 
 );

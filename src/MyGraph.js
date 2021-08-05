@@ -21,12 +21,14 @@ const myConfig = {
     height : 1000,
     node: {
         color: 'lightgreen',
-        size: 220,
-        highlightStrokeColor: 'blue'
+        size: 1000,
+        highlightStrokeColor: 'blue',
+        fontSize: '13px',
+        fontWeight: 'bold'
     },
     link: {
         highlightColor: 'lightblue'
-    }
+    },
 };
 
 class myGraph extends Component
@@ -53,11 +55,17 @@ class myGraph extends Component
         }
         sourceStore.onChange=()=>{
             this.setState({sNode: sourceStore.sNode})
-            document.getElementById("link_info").innerHTML = "from " + sourceStore.sNode;
+            if(sourceStore.sNode != null)
+                document.getElementById("link_info").innerHTML = "From " + sourceStore.sNode;
+            else
+                document.getElementById("link_info").innerHTML = "" ;
         }
         targetStore.onChange=()=>{
             this.setState({tNode: targetStore.tNode})
-            document.getElementById("link_info").innerHTML = "from " + sourceStore.sNode + " to " + targetStore.tNode ;
+            if(sourceStore.sNode == null && targetStore.tNode == null)
+                document.getElementById("link_info").innerHTML = "" ;
+            else
+                document.getElementById("link_info").innerHTML = "From " + sourceStore.sNode + " to " + targetStore.tNode ;
         }
         linkStore.onChange=()=>{
             data.links.push({source:linkStore.sNode, target:linkStore.tNode, emo:[], anno:[]})
@@ -152,7 +160,6 @@ class myGraph extends Component
     onMouseOutNode = function(nodeId) {
        // window.alert(`Mouse out node ${nodeId}`);
     };
-
 
 
     onMouseOverLink = function(source, target) {

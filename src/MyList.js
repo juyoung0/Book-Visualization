@@ -38,10 +38,10 @@ const sliderStyles = {
         transform: 'rotate(45deg)',
         color: 'white',
         textAlign: 'center',
-        position: 'relative',
+        position: 'center',
         top: '3px',
         right: '0px',
-        fontSize: '10px',
+        fontSize: '14px',
     },
 };
 
@@ -78,11 +78,13 @@ class ListItems extends React.Component {
         var speechList = [];
         var emoList = [];
         var annoList = [];
+        var nameList = [];
 
         if(ind>-1 && dataStore.data.nodes.length > 0) {
             speechList = dataStore.data.nodes[ind].speech;
             emoList = dataStore.data.nodes[ind].emo;
             annoList = dataStore.data.nodes[ind].anno;
+            nameList = dataStore.data.nodes[ind].id;
         }
 
         console.log(dataStore.data)
@@ -91,19 +93,18 @@ class ListItems extends React.Component {
                 <Menu id="main-menu">
                     < MenuItem id="speeches" onClick={this.handleClick}> Speech < / MenuItem >
                     <Menu>
-                    {speechList.map(s => { return (<MenuItem id={s} primaryText={s} />); })}
+                    {speechList.map((s,i) => { return (<MenuItem id={s} primaryText={nameList[i] + " : " + speechList[i]} />); })}
                     </Menu>
                     <Divider />
                     < MenuItem id="emotions" onClick={this.handleClick}> Emotion < / MenuItem >
                     <Menu>
-                    {emoList.map((s,i) => { return (<div><MenuItem id={annoList[i]} primaryText={emoList[i] + " : " + annoList[i]} /></div>); })}
+                    {emoList.map((s,i) => { return (<div><MenuItem id={s} primaryText={nameList[i] + " : (" + emoList[i] + ") " + annoList[i]} /></div>); })}
                     </Menu>
                 </Menu>
             </div>
         );
-    }
+    };
 };
-
 
 
 export default ListItems;
