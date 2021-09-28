@@ -10,8 +10,11 @@
 * 사용 스택 : Javascript, React, Material-UI
 
 ### Demo ###
+![demo1](https://user-images.githubusercontent.com/8486747/135140502-95f97a38-2358-4be7-aadb-bfeb67dca958.gif)
 
-![Bookvis_demo](https://user-images.githubusercontent.com/8486747/128362919-1156703a-5e36-41ca-978e-363c90a4f6ed.gif)
+![demo2](https://user-images.githubusercontent.com/8486747/135140472-2271705f-3a34-471c-b0f1-08108b86c1af.gif)
+
+![demo3](https://user-images.githubusercontent.com/8486747/135140421-732ac5ee-a68d-4966-882a-fcd64e1f6255.gif)
 
 ### User Study ###
 두 명의 피실험자와 능동적 읽기 (종이에 필기 / Bookvis 시스템 사용)에 대한 실험을 진행하였습니다.
